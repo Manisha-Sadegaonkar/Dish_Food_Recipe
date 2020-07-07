@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
+</style>
+</head>
+
+{% block content %}
+  <ul>
+    <li>
+      <a href="{% url 'simple_upload' %}">Simple Upload</a>
+    </li>
+    <li>
+      <a href="{% url 'model_form_upload' %}">Model Form Upload</a>
+    </li>
+  </ul>
+
+  <h2>Food Recipe</h2>
+
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+  <ul id="myUL">
+  <p>Uploaded files:</p>
+  <div class="container">
+    {% for obj in documents %}
+      <li>
+        <a href="{{ obj.document.url }}">{{ obj.document.name }}</a>
+        <a href="{{ obj.description.url }}">{{ obj.description.name }}</a>
+        <small>(Description : {{ obj.description }})</small>
+        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+        <img src="{{obj.document.url}}" alt="Dish" width="304" height="236"/ >
+      </li>
+    {% endfor %}
+  </ul>
+
+<body>
+
+<!--
+<h2>Food Recipe</h2>
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+<ul id="myUL">
+ <div class="container">
+  <li><a href="#">Paneer Masala</a>
+  <p> Recipe-
+  Take all the ingredients mentioned under "For Gravy" in a mixer jar.
+  Grind to a smooth paste using little water.
+  In a pressure cooker, add the ground paste and the other main ingredients and mix well.
+  Place the cooker on the small burner of the stove and cook for 2 whistles over medium flame.
+  After the pressure gets released on its own, open the lid and mix well.
+  Transfer to the serving bowl and serve garnished with a dollop of cream on top and coriander leaves. </p>
+  <img src="https://thumbs.dreamstime.com/z/matar-paneer-cottage-cheese-peas-rich-tomato-sauce-classic-traditional-north-indian-curry-served-paratha-104029463.jpg" alt="Avatar" class="img-responsive" width="304" height="236">
+  </li>
+
+  <li><a href="#">Dal Khichadi</a>
+  <p> Recipe-
+  Heat a pan, add foxtail millet and dry roast over low flame for 1 - 2 mins. It should be hot to your touch. Transfer to a bowl.
+  Add moong dal to the pan and dry roast it for 10-20 seconds. Transfer it to the same bowl.Heat a pressure pan with oil.
+  Temper with mustard seeds and asafoetida. When the mustard splutter, add cumin seeds and let it sizzle.
+  Add onions and cook till it turns translucent.Add tomato, ginger and saute for a few seconds.
+  Add chopped vegetables, green chilies, curry leaves, peas and mix well.
+  Add turmeric powder, curry powder, dry roasted foxtail millet, yellow moong dal and give a quick mix.
+  Add water, salt, mix well, close the cooker and cook for 3 whistles over low flame.
+  After the pressure is released, open the cooker and mash gently.
+Millet khichdi is ready.
+Serve hot with more ghee drizzled on top with curd raita or pickle
+  </p>
+  <img src="https://www.cookwithmanali.com/wp-content/uploads/2016/04/Moong-Dal-Khichdi.jpg" alt="Avatar" class="img-responsive" width="304" height="236">
+  </li>
+
+  <li><a href="#">Dam Aloo</a>
+  <p>Recipe-
+  Heat a pan with 2 tbsp oil. Add bay leaf.
+  Add the onion paste and over low flame cook till almost all the oil gets absorbed by the paste. This should take 3 to 5 mins.
+  Add tomato puree. Mix well, close the pan withe a lid and let it cook for another 3 to 5 mins.
+  Add turmeric, red chili and kashmiri red chili powders and mix well.
+  Cook over low flame till the moisture evaporates completely and the oil starts to ooze out from the sides. This should take 5 to 8 mins.
+  Add 1-1/2 cups water, milk, salt and sugar. Mix well and let it come to boil over low flame.
+  Cook for another 5 to 6 mins for the gravy to come together and thicken slightly.Add air fryed or deep fried baby potatoes.
+  Cook over low flame for another 2 mins. Switch off flame.
+  Sprinkle crushed kasuri methi, mix well and close with a lid and rest for another 2 to 3 mins.
+  Serve this punjabi dum aloo hot with rotis, naans, puris or any pulao varieties.
+  </p>
+  <img src="https://i2.wp.com/www.vegrecipesofindia.com/wp-content/uploads/2012/04/kashmiri-dum-aloo-recipe1.jpg" alt="Avatar" class="img-responsive" width="304" height="236">
+  </li>
+
+  <li><a href="#">Veg Biryani</a>
+  <p>Recipe-
+  Drain the water completely from the rice and add it to the pressure cooker and mix well.
+  Add coconut milk, water, salt and stir the entire contents to mix well.
+  Close the pan with the lid and pressure cook for 2 whistles over high flame and switch off the stove.
+  Wait for the pressure to release by itself and open the lid.
+  Stir gently for the rice to mix well and to prevent it from breaking off.Biryani is ready to serve.
+  Enjoy it hot with any raita of your choice.
+  </p>
+  <img src="https://hebbarskitchen.com/wp-content/uploads/2017/06/veg-biryani-in-cooker-how-to-make-vegetable-biryani-recipe-in-cooker-1-696x927.jpeg" alt="Avatar" class="img-responsive" width="304" height="236">
+  </li>
+ </div>
+</ul>
+-->
+
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+{% endblock %}
+
+</body>
+</html>
